@@ -1,18 +1,33 @@
 const initialState = {
-  shapes: {
-    paper: 'hand-paper-o',
-    rock: 'hand-rock-o',
-    scissors: 'hand-scissors-o'
-  },
   scoreList: {
-    humanWins: 1,
-    computerWins: 2,
+    roundCount: 0,
+    humanWins: 0,
+    computerWins: 0,
     ties: 0,
   },
-  humanShape: '',
-  computerShape: 'hand-rock-o',
-  roundCount: 4,
+  human: {
+    humanShape: '',
+    color: '',
+    win: true,
+  },
+  computer: {
+    computerShape: '',
+    color: '',
+    win: false,
+  },
   history: [],
 };
+//
+// const initialState = {
+//   scoreList: {
+//     humanWins: 0,
+//     computerWins: 0,
+//     ties: 0,
+//   },
+//   humanShape: '',
+//   computerShape: 'hand-rock-o',
+//   roundCount: 0,
+//   history: [],
+// };
 
 export default initialState;

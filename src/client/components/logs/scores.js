@@ -25,6 +25,10 @@ const DisplayScore = ({ value }) =>
   </WrapperScore>
   ;
 
+DisplayScore.propTypes = {
+  value: PropTypes.number.isRequired,
+};
+
 const ScoreList = ({ scoreList }) => {
   const { humanWins, computerWins, ties } = scoreList;
   return (

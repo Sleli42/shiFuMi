@@ -1,16 +1,14 @@
-import {
-  SHAPE_SELECTED,
-} from '../actions/';
+import { combineReducers } from 'redux';
+import computer from './computer';
+import human from './human';
+import scoreList from './scoreList';
+import history from './history';
 
-const shapeReducer = (state = '', action) => {
-  const { payload } = action;
-  switch (action.type) {
-    case SHAPE_SELECTED:
-      const newState = { ...state };
-      newState.humanShape = payload.shape;
-      return newState;
-    default: return state;
-  }
-};
+const rootReducers = combineReducers({
+  computer,
+  human,
+  scoreList,
+  history,
+});
 
-export default shapeReducer;
+export default rootReducers;

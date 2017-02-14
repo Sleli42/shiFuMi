@@ -42,6 +42,10 @@ const Round = ({ roundCount }) =>
   </div>
   ;
 
+Round.propTypes = {
+  roundCount: PropTypes.number.isRequired,
+};
+
 const Logs = ({ scoreList, roundCount }) =>
   <Wrapper>
     <Title />
@@ -50,7 +54,7 @@ const Logs = ({ scoreList, roundCount }) =>
   </Wrapper>
   ;
 
-Logs.PropTypes = {
+Logs.propTypes = {
   scoreList: PropTypes.object.isRequired,
   roundCount: PropTypes.number.isRequired,
 };

@@ -1,14 +1,5 @@
-export const SHAPE_SELECTED = 'shape/shapeSelected';
-
-const shapeSelected = shape => ({
-  type: SHAPE_SELECTED,
-  payload: shape,
-});
-
-const selectShape = shape => (dispatch) => {
-  dispatch(shapeSelected({ shape }));
-};
+import shape from './shape';
 
 export default {
-  selectShape,
-}
+  ...shape,
+};

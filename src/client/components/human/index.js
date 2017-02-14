@@ -38,16 +38,14 @@ const DisplayWins = () =>
   </WrapperWins>
   ;
 
-const HumanBoard = ({ actions, shapeList, shape }) => {
-  return (
-    <WrapperBoard>
-      <Title />
-      <ShapeList actions={actions} shapeList={shapeList} />
-      <DisplayWins />
-      <DisplayShape icon={shape}/>
-    </WrapperBoard>
-  );
-};
+const HumanBoard = ({ actions, shapeList, shape }) =>
+  <WrapperBoard>
+    <Title />
+    <ShapeList actions={actions} shapeList={shapeList} />
+    <DisplayWins />
+    <DisplayShape icon={shape} />
+  </WrapperBoard>
+    ;
 
 HumanBoard.propTypes = {
   actions: PropTypes.object.isRequired,

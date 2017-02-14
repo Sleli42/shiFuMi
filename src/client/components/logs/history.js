@@ -1,10 +1,10 @@
-import React from 'react';
+// import React from 'react';
 
 const History = () => {
-  <Wrapper>
-    <RoundCounter />
-    <HistoryList />
-  </Wrapper>
-}
+  // <Wrapper>
+  //   <RoundCounter />
+  //   <HistoryList />
+  // </Wrapper>
+};
 
 export default History;

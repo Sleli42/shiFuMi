@@ -38,17 +38,23 @@ const DisplayWins = () =>
   </WrapperWins>
   ;
 
-const computerBoard = ({ shape }) =>
-  <Wrapper>
-    <Title />
-    <DisplayWins />
-    {/* fct => if loose ->.. || if win ->..  */}
-    <DisplayShape icon={shape} />
-  </Wrapper>
-  ;
+const computerBoard = ({ actions, shape, humanShape }) => {
+  // console.log('humanShape receiv: ', humanShape);
+  if (humanShape) actions.selectComputerShape();
+  return (
+    <Wrapper>
+      <Title />
+      <DisplayWins />
+      {/* fct => if loose ->.. || if win ->..  */}
+      <DisplayShape icon={shape} />
+    </Wrapper>
+  );
+};
 
-  computerBoard.propTypes = {
-    shape: PropTypes.string.isRequired,
-  };
+computerBoard.propTypes = {
+  actions: PropTypes.object.isRequired,
+  shape: PropTypes.string.isRequired,
+  humanShape: PropTypes.string.isRequired,
+};
 
 export default computerBoard;
