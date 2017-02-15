@@ -11,7 +11,7 @@ export const Wrapper = styled.li`
 
 const ShapeIcon = ({ actions, icon }) => {
   const handleClick = () => {
-    actions.selectHumanShape(icon);
+    actions.humanSelectShape(icon);
   };
   return (
     <button

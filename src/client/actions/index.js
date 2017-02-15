@@ -1,5 +1,11 @@
-import shape from './shape';
+import human from './human';
+import computer from './computer';
+import scoreList from './scoreList';
+import currentLoads from './currentLoads';
 
 export default {
-  ...shape,
+  ...human,
+  ...computer,
+  ...scoreList,
+  ...currentLoads,
 };

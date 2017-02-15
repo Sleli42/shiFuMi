@@ -21,19 +21,22 @@ const shapes = {
   scissors: 'hand-scissors-o',
 };
 
-const App = ({ actions, human, computer, scoreList }) =>
-  <Wrapper>
-    <HumanBoard actions={actions} shapeList={shapes} shape={human.humanShape} />
-    <Logs scoreList={scoreList} roundCount={scoreList.roundCount} />
-    <ComputerBoard actions={actions} shape={computer.computerShape} humanShape={human.humanShape} />
-  </Wrapper>
-  ;
+const App = ({ actions, human, computer, scoreList, currentLoads }) => {
+  return (
+    <Wrapper>
+      <HumanBoard actions={actions} shapeList={shapes} humanData={human} computerData={computer} />
+      <Logs scoreList={scoreList} roundCount={scoreList.roundCount} />
+      <ComputerBoard actions={actions} computerData={computer} humanData={human} currentLoads={currentLoads} />
+    </Wrapper>
+  );
+};
 
 App.propTypes = {
   actions: PropTypes.object.isRequired,
   human: PropTypes.object.isRequired,
   computer: PropTypes.object.isRequired,
   scoreList: PropTypes.object.isRequired,
+  currentLoads: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = state => state;

@@ -16,18 +16,7 @@ const initialState = {
     win: false,
   },
   history: [],
+  currentLoads: 0,
 };
-//
-// const initialState = {
-//   scoreList: {
-//     humanWins: 0,
-//     computerWins: 0,
-//     ties: 0,
-//   },
-//   humanShape: '',
-//   computerShape: 'hand-rock-o',
-//   roundCount: 0,
-//   history: [],
-// };
 
 export default initialState;
