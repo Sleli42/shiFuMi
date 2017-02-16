@@ -6,9 +6,9 @@ import DisplayShape, { DisplayWins } from '../shape/display';
 const Wrapper = styled.section`
   border: 2px solid black;
   margin: 10px;
-  max-width: 300px;
-  min-width: 200px;
-  max-height: 500px;
+  ${''/* max-width: 300px;*/}
+  ${''/* min-width: 200px;*/}
+  ${''/* max-height: 500px;*/}
   flex-grow: 1;
 `;
 
@@ -26,17 +26,17 @@ const Title = () =>
   </WrapperTitle>
   ;
 
-const computerBoard = ({ actions, computerData, humanData, currentLoads }) => {
+const computerBoard = ({ actions, computerData, currentLoads }) => {
   const { computerShape, color } = computerData;
   const shape = `hand-${computerShape}-o`;
   return (
     <Wrapper>
       <Title />
-      {/* {
-        (humanData.humanShape && computerData.computerShape)
-        ? <DisplayWins result={humanData.win} />
+      {
+        (computerData.win)
+        ? <DisplayWins result={computerData.win} />
         : <div />
-      } */}
+      }
       {
         (currentLoads >= 1)
         ? <Spin size="large" />
@@ -49,7 +49,6 @@ const computerBoard = ({ actions, computerData, humanData, currentLoads }) => {
 computerBoard.propTypes = {
   actions: PropTypes.object.isRequired,
   computerData: PropTypes.object.isRequired,
-  humanData: PropTypes.object.isRequired,
   currentLoads: PropTypes.number.isRequired,
 };
 

@@ -3,32 +3,38 @@ import store from '../';
 import initialState from '../mystate';
 import { equality, humanWin, computerWin } from './scoreList';
 import { addLoading, delLoading } from './currentLoads';
+import { addHumanWin } from './human';
+import { addHistory } from './history';
 
-export const COMPUTER_SHAPE_SELECTED = 'computerShape/shapeSelected';
+export const COMPUTER_SHAPE_SELECTED = 'computer/shapeSelected';
+export const COMPUTER_WIN_ADDED = 'computer/winAdded';
 
 const whoIsStrongest = (humanShape, computerShape) => (dispatch) => {
   if ((humanShape === 'hand-paper-o' && computerShape === 'hand-rock-o')
   || (humanShape === 'hand-rock-o' && computerShape === 'hand-scissors-o')
   || (humanShape === 'hand-scissors-o' && computerShape === 'hand-paper-o')) {
-    console.log('here Human WIN');
     dispatch(humanWin());
+    dispatch(addHumanWin('Win !'));
+    dispatch(addComputerWin('Loose !'));
   } else {
-    console.log('here COMPUTER WIN');
     dispatch(computerWin());
+    dispatch(addComputerWin('Win !'));
+    dispatch(addHumanWin('Loose !'));
   }
 }
 
-const compareShapes = (humanShape, computerShape) => (dispatch) => {
-  // const { humanShape } = human;
-  // const { computerShape } = computer;
+const compareShapes = (computerShape) => (dispatch) => {
   const computShape = `hand-${computerShape}-o`;
-  // console.log('humanshape: ', humanShape, 'computershape: ', computShape);
-  if (humanShape === computShape) {
-    console.log('equality');
+  const { human, computer, scoreList } = store.getState(initialState);
+  console.log( 'human:', human);
+  if (human.humanShape === computShape) {
     dispatch(equality());
+    dispatch(addComputerWin('Draw !'));
+    dispatch(addHumanWin('Draw !'));
   } else {
-    dispatch(whoIsStrongest(humanShape, computShape));
+    dispatch(whoIsStrongest(human.humanShape, computShape));
   }
+  dispatch(addHistory(human.humanShape, scoreList.roundCount, computer.computerShape))
 };
 
 const computerShapeSelected = (icon, color) => ({
@@ -49,7 +55,7 @@ export const computerSelectShape = () => (dispatch) => {
   fetch(uri, params)
     .then(shape => shape.json())
     .then(shape => dispatch(computerShapeSelected(shape.icon, shape.color)))
-    .then(res => dispatch(compareShapes(human.humanShape, res.payload.icon)))
+    .then(res => dispatch(compareShapes(res.payload.icon)))
     // .then(res => setTimeout(
     //   dispatch(compareShapes(human.humanShape, res.payload.icon))),
     //   5000
@@ -61,7 +67,13 @@ export const computerSelectShape = () => (dispatch) => {
   );
 };
 
+const addComputerWin = result => ({
+  type: COMPUTER_WIN_ADDED,
+  payload: result,
+});
+
 export default {
   computerSelectShape,
   compareShapes,
+  addComputerWin,
 };

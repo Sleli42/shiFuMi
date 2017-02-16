@@ -21,12 +21,12 @@ const shapes = {
   scissors: 'hand-scissors-o',
 };
 
-const App = ({ actions, human, computer, scoreList, currentLoads }) => {
+const App = ({ actions, human, computer, scoreList, history, currentLoads }) => {
   return (
     <Wrapper>
       <HumanBoard actions={actions} shapeList={shapes} humanData={human} computerData={computer} />
-      <Logs scoreList={scoreList} roundCount={scoreList.roundCount} />
-      <ComputerBoard actions={actions} computerData={computer} humanData={human} currentLoads={currentLoads} />
+      <Logs actions={actions} scoreList={scoreList} history={history} humanResult={human.win} computerResult={computer.win} />
+      <ComputerBoard actions={actions} computerData={computer} currentLoads={currentLoads} />
     </Wrapper>
   );
 };
@@ -36,6 +36,7 @@ App.propTypes = {
   human: PropTypes.object.isRequired,
   computer: PropTypes.object.isRequired,
   scoreList: PropTypes.object.isRequired,
+  history: PropTypes.array.isRequired,
   currentLoads: PropTypes.number.isRequired,
 };
 

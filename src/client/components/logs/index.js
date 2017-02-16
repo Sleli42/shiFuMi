@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import styled from 'styled-components';
 import Scores from './scores';
+import History from './history';
 
 const Wrapper = styled.section`
   border: 2px solid black;
@@ -46,17 +47,33 @@ Round.propTypes = {
   roundCount: PropTypes.number.isRequired,
 };
 
-const Logs = ({ scoreList, roundCount }) =>
-  <Wrapper>
-    <Title />
-    <Scores scoreList={scoreList} />
-    <Round roundCount={roundCount} />
-  </Wrapper>
-  ;
+const Logs = ({ actions, scoreList, history, humanResult, computerResult }) => {
+  // if (humanResult) actions.addColorsHistory(history, humanResult, computerResult);
+  return (
+    <Wrapper>
+      <Title />
+      <Scores scoreList={scoreList} />
+      <Round roundCount={scoreList.roundCount} />
+      {
+        (scoreList.roundCount >= 1)
+        ? <History
+            actions={actions}
+            roundCount={scoreList.roundCount}
+            history={history}
+            humanResult={humanResult}
+            computerResult={computerResult} />
+        : <div />
+      }
+    </Wrapper>
+  );
+};
 
 Logs.propTypes = {
+  actions: PropTypes.object.isRequired,
   scoreList: PropTypes.object.isRequired,
-  roundCount: PropTypes.number.isRequired,
+  history: PropTypes.array.isRequired,
+  humanResult: PropTypes.string.isRequired,
+  computerResult: PropTypes.string.isRequired,
 };
 
 export default Logs;

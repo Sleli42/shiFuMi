@@ -8,12 +8,12 @@ const initialState = {
   human: {
     humanShape: '',
     color: '',
-    win: true,
+    win: '',
   },
   computer: {
     computerShape: '',
     color: '',
-    win: false,
+    win: '',
   },
   history: [],
   currentLoads: 0,

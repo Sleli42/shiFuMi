@@ -26,18 +26,15 @@ const Title = () =>
   ;
 
 const HumanBoard = ({ actions, shapeList, humanData, computerData }) => {
-  // if (humanData.humanShape && computerData.computerShape) {
-  //   actions.compareShapes(humanData, computerData);
-  // }
   return (
     <WrapperBoard>
       <Title />
       <ShapeList actions={actions} shapeList={shapeList} />
-      {/* {
-        (humanData.humanShape && computerData.computerShape)
+      {
+        (humanData.win)
         ? <DisplayWins result={humanData.win} />
         : <div />
-      } */}
+      }
       <DisplayShape icon={humanData.humanShape} color={humanData.color} />
     </WrapperBoard>
   );

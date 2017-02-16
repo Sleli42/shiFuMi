@@ -5,18 +5,18 @@ import {
 } from '../actions/scoreList';
 
 const scoreListReducer = (state = {}, action) => {
-  // console.log('action: ', action);
-  // const { payload } = action;
+  const newState = { ...state };
+  newState.roundCount += 1;
   switch (action.type) {
     case EQUALITY:
-      console.log('[eq]state: ', state);
-      return state.ties + 1;
+      newState.ties += 1;
+      return newState;
     case HUMAN_WIN:
-      console.log('[human]state: ', state);
-      return state.humanWins + 1;
+      newState.humanWins += 1;
+      return newState;
     case COMPUTER_WIN:
-      console.log('[computer]state: ', state);
-      return state.computerWins + 1;
+      newState.computerWins += 1;
+      return newState;
     default: return state;
   }
 };

@@ -37,16 +37,16 @@ export const DisplayWins = ({ result }) => {
   return (
     <WrapperWins>
       {
-        (!result)
-          ? <p>Loose !</p>
-          : <p>Win !</p>
+        (result)
+          ? <p>{result}</p>
+          : <div />
       }
     </WrapperWins>
   );
 };
 
 DisplayWins.propTypes = {
-  result: PropTypes.bool.isRequired,
+  result: PropTypes.string.isRequired,
 };
 
 export default DisplayShape;
