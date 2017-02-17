@@ -1,21 +1,14 @@
-export const EQUALITY = 'scoreList/equality';
-export const HUMAN_WIN = 'scoreList/humanWin';
-export const COMPUTER_WIN = 'scoreList/computerWin';
+export const END_OF_ROUND = 'scoreList/endOfRound';
 
-export const equality = () => ({
-  type: EQUALITY,
+export const roundEnded = (human, computer) => ({
+  type: END_OF_ROUND,
+  payload: { human, computer },
 });
 
-export const humanWin = () => ({
-  type: HUMAN_WIN,
-});
-
-export const computerWin = () => ({
-  type: COMPUTER_WIN,
-});
+export const endOfRound = (human, computer) => (dispatch) => {
+  dispatch(roundEnded(human, computer));
+}
 
 export default {
-  equality,
-  humanWin,
-  computerWin,
+  endOfRound,
 };

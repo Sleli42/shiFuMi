@@ -6,12 +6,15 @@ export const Wrapper = styled.li`
   padding: 0;
   height: 100px;
   margin: 5px;
-  flex-grow: 1;
+  display:flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-basis: 33.3333%;
 `;
 
-const ShapeIcon = ({ actions, icon }) => {
+const ShapeIcon = ({ action, icon }) => {
   const handleClick = () => {
-    actions.humanSelectShape(icon);
+    action(icon);
   };
   return (
     <button
@@ -23,18 +26,18 @@ const ShapeIcon = ({ actions, icon }) => {
 };
 
 ShapeIcon.propTypes = {
-  actions: PropTypes.object.isRequired,
+  action: PropTypes.func.isRequired,
   icon: PropTypes.string.isRequired,
 };
 
-const Shape = ({ actions, icon }) =>
+const Shape = ({ action, icon }) =>
   <Wrapper>
-    <ShapeIcon actions={actions} icon={icon} />
+    <ShapeIcon action={action} icon={icon} />
   </Wrapper>
   ;
 
 Shape.propTypes = {
-  actions: PropTypes.object.isRequired,
+  action: PropTypes.func.isRequired,
   icon: PropTypes.string.isRequired,
 };
 

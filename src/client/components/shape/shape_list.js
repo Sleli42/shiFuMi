@@ -5,26 +5,29 @@ import Shape from './shape';
 /* ul padding auto */
 
 const Wrapper = styled.ul`
-  margin: 5px;
+  margin: 0 auto;
+  padding: 0;
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: flex-start;
+  position: absolute;
+  width: 100%;
+  left: 50%;
+  transform: translate(-50%, 0);
 `;
 
-const ShapeList = ({ actions, shapeList }) => {
+const ShapeList = ({ action, shapeList }) => {
   const { paper, rock, scissors } = shapeList;
   return (
     <Wrapper>
-      <Shape actions={actions} icon={paper} />
-      <Shape actions={actions} icon={rock} />
-      <Shape actions={actions} icon={scissors} />
+      <Shape action={action} icon={paper} />
+      <Shape action={action} icon={rock} />
+      <Shape action={action} icon={scissors} />
     </Wrapper>
   );
 };
 
 ShapeList.propTypes = {
-  actions: PropTypes.object.isRequired,
+  action: PropTypes.func.isRequired,
   shapeList: PropTypes.object.isRequired,
 };
 

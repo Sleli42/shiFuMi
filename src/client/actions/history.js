@@ -11,35 +11,33 @@ const historyUpdate = (history) => ({
   payload: history,
 });
 
-const chooseColor = humanResult => {
-  if (humanResult === 'Win !') {
-    return '#63b45c';
-  } else if (humanResult === 'Draw !') {
-    return '#d4ca65';
-  } else if (humanResult === 'Loose !') {
-    return '#f67272';
-  }
-}
-
-export const addColorsHistory = (lineHistory, humanResult, computerResult) => (dispatch) => {
-  console.log('line receiv: ', lineHistory);
-  const humanColor = chooseColor(humanResult);
-  const computerColor = chooseColor(computerResult);
-  const newLineHistory = { ...lineHistory, humanColor, computerColor };
-  dispatch(historyUpdate(newLineHistory));
-};
+// const chooseColor = humanResult => {
+//   if (humanResult === 'Win !') {
+//     return '#63b45c';
+//   } else if (humanResult === 'Draw !') {
+//     return '#d4ca65';
+//   } else if (humanResult === 'Loose !') {
+//     return '#f67272';
+//   }
+// }
+//
+// export const addColorsHistory = (lineHistory, humanResult, computerResult) => (dispatch) => {
+//   console.log('line receiv: ', lineHistory);
+//   const humanColor = chooseColor(humanResult);
+//   const computerColor = chooseColor(computerResult);
+//   const newLineHistory = { ...lineHistory, humanColor, computerColor };
+//   dispatch(historyUpdate(newLineHistory));
+// };
 
 export const addHistory = (humanShape, roundCount, computerShape) => (dispatch) => {
   const historyRound = { humanShape, roundCount };
   if (!humanShape || !computerShape) return ;
   const computShape = `hand-${computerShape}-o`;
   const history = { ...historyRound, computerShape: computShape };
-  // dispatch(addColors(history));
-  // console.log('history line:', history);
   dispatch(historyAdded(history));
 };
 
 export default {
   addHistory,
-  addColorsHistory,
+  // addColorsHistory,
 };

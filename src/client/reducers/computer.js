@@ -1,6 +1,6 @@
 import {
   COMPUTER_SHAPE_SELECTED,
-  COMPUTER_WIN_ADDED,
+  END_OF_ROUND,
 } from '../actions/computer';
 
 const computerReducer = (state = {}, action) => {
@@ -11,9 +11,9 @@ const computerReducer = (state = {}, action) => {
       newState.computerShape = payload.icon;
       newState.color = payload.color;
       return newState;
-    case COMPUTER_WIN_ADDED:
-      newState.win = payload;
-      return newState;
+    case END_OF_ROUND:
+      console.log('state receiv: ', state);
+      console.log('payload receiv: ', payload);
     default: return state;
   }
 };

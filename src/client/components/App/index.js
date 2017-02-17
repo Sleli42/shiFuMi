@@ -21,23 +21,18 @@ const shapes = {
   scissors: 'hand-scissors-o',
 };
 
-const App = ({ actions, human, computer, scoreList, history, currentLoads }) => {
+const App = ({ actions }) => {
   return (
     <Wrapper>
-      <HumanBoard actions={actions} shapeList={shapes} humanData={human} computerData={computer} />
-      <Logs actions={actions} scoreList={scoreList} history={history} humanResult={human.win} computerResult={computer.win} />
-      <ComputerBoard actions={actions} computerData={computer} currentLoads={currentLoads} />
+      <HumanBoard action={actions.humanSelectShape} shapeList={shapes} />
+      <Logs />
+      <ComputerBoard />
     </Wrapper>
   );
 };
 
 App.propTypes = {
   actions: PropTypes.object.isRequired,
-  human: PropTypes.object.isRequired,
-  computer: PropTypes.object.isRequired,
-  scoreList: PropTypes.object.isRequired,
-  history: PropTypes.array.isRequired,
-  currentLoads: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = state => state;

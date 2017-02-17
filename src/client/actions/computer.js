@@ -1,40 +1,30 @@
 import 'whatwg-fetch';
-import store from '../';
-import initialState from '../mystate';
-import { equality, humanWin, computerWin } from './scoreList';
 import { addLoading, delLoading } from './currentLoads';
 import { addHumanWin } from './human';
 import { addHistory } from './history';
+import { endOfRound } from './scoreList';
 
 export const COMPUTER_SHAPE_SELECTED = 'computer/shapeSelected';
-export const COMPUTER_WIN_ADDED = 'computer/winAdded';
+export const END_OF_ROUND = 'endOfRound/endRound';
 
-const whoIsStrongest = (humanShape, computerShape) => (dispatch) => {
-  if ((humanShape === 'hand-paper-o' && computerShape === 'hand-rock-o')
+const whoIsStrongest = (humanShape, computerShape) => {
+  if (humanShape === computerShape) return 'draw';
+  else if ((humanShape === 'hand-paper-o' && computerShape === 'hand-rock-o')
   || (humanShape === 'hand-rock-o' && computerShape === 'hand-scissors-o')
   || (humanShape === 'hand-scissors-o' && computerShape === 'hand-paper-o')) {
-    dispatch(humanWin());
-    dispatch(addHumanWin('Win !'));
-    dispatch(addComputerWin('Loose !'));
-  } else {
-    dispatch(computerWin());
-    dispatch(addComputerWin('Win !'));
-    dispatch(addHumanWin('Loose !'));
-  }
-}
+    return 'win';
+  } else return 'loose';
+};
 
-const compareShapes = (computerShape) => (dispatch) => {
-  const computShape = `hand-${computerShape}-o`;
-  const { human, computer, scoreList } = store.getState(initialState);
-  console.log( 'human:', human);
-  if (human.humanShape === computShape) {
-    dispatch(equality());
-    dispatch(addComputerWin('Draw !'));
-    dispatch(addHumanWin('Draw !'));
-  } else {
-    dispatch(whoIsStrongest(human.humanShape, computShape));
-  }
-  dispatch(addHistory(human.humanShape, scoreList.roundCount, computer.computerShape))
+const compareShapes = () => (dispatch, getState) => {
+  const { human, computer } = getState();
+  const computShape = `hand-${computer.computerShape}-o`;
+  /* define who win */
+  human.win = whoIsStrongest(human.humanShape, computShape);
+  if (human.win === 'draw') computer.win = 'draw';
+  else if (human.win === 'win') computer.win = 'loose';
+  else if (human.win === 'loose') computer.win = 'win';
+  dispatch(endOfRound(human, computer));
 };
 
 const computerShapeSelected = (icon, color) => ({
@@ -43,37 +33,28 @@ const computerShapeSelected = (icon, color) => ({
 });
 
 export const computerSelectShape = () => (dispatch) => {
-  const { human } = store.getState(initialState);
   const uri = 'https://hook.io/eric-basley/roshambo';
   const params = {
     headers: { 'Content-Type': 'application/json' },
     method: 'GET',
   };
-  // if (dispatch) {
-  //   dispatch(addLoading());
-  // }
+  const callAfterTimeout = shape => {
+    dispatch(computerShapeSelected(shape.icon, shape.color));
+    dispatch(compareShapes());
+    dispatch(delLoading());
+  };
+  if (dispatch) dispatch(addLoading());
   fetch(uri, params)
     .then(shape => shape.json())
-    .then(shape => dispatch(computerShapeSelected(shape.icon, shape.color)))
-    .then(res => dispatch(compareShapes(res.payload.icon)))
-    // .then(res => setTimeout(
-    //   dispatch(compareShapes(human.humanShape, res.payload.icon))),
-    //   5000
-    // )
+    .then(shape => setTimeout(() => callAfterTimeout(shape), 1000))
     .catch((error) => {
-      // if (dispatch) dispatch(delLoading());
+      dispatch(delLoading());
       console.log('ERROR:', error);
     }
   );
 };
 
-const addComputerWin = result => ({
-  type: COMPUTER_WIN_ADDED,
-  payload: result,
-});
-
 export default {
   computerSelectShape,
   compareShapes,
-  addComputerWin,
 };

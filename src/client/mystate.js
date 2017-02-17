@@ -4,6 +4,7 @@ const initialState = {
     humanWins: 0,
     computerWins: 0,
     ties: 0,
+    history: [],
   },
   human: {
     humanShape: '',
@@ -15,7 +16,6 @@ const initialState = {
     color: '',
     win: '',
   },
-  history: [],
   currentLoads: 0,
 };
 

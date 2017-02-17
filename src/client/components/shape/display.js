@@ -27,18 +27,24 @@ DisplayShape.propTypes = {
 const WrapperWins = styled.h3`
   font-size: 70px;
   text-align: center;
-  color: red;
-  margin-top: 110px;
-  margin-bottom: 75px;
+  margin-top: 60px;
+  margin-bottom: 30px;
 `;
 
-export const DisplayWins = ({ result }) => {
-  if (result === undefined) return <div />;
+const chooseColor = result => {
+  if (result === 'win') return '#5cb85c';
+  else if (result === 'loose') return '#ff4040';
+  else return '#d3a625'
+};
+
+export const DisplayWins = ({ result, colors }) => {
+  if (result === undefined) return null;
+  const color = chooseColor(result);
   return (
     <WrapperWins>
       {
         (result)
-          ? <p>{result}</p>
+          ? <p style={{ color }}>{result}</p>
           : <div />
       }
     </WrapperWins>

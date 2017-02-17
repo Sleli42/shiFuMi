@@ -1,78 +1,63 @@
 import React, { PropTypes } from 'react';
 import styled from 'styled-components';
+import R from 'ramda';
 
 const Wrapper = styled.div`
   background: #ffffff;
+  margin-top: 12px;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
 `;
 
 const WrapperLine = styled.div`
+  align-self: center;
   flex-grow: 1;
 `;
 
 const Icon = styled.i`
-  font-size: 20px;
+  margin: 0 30px;
+  font-size: 30px;
 `;
 
 const DisplayShapeHistory = ({ icon, color }) =>
-  <Icon className={`fa fa-${icon} fa-5x`} style={{ color }} aria-hidden="true" />
+  <Icon className={`fa fa-${icon} fa-2x`} style={{ color }} aria-hidden="true" />
   ;
 
   DisplayShapeHistory.propTypes = {
-    icon: PropTypes.string.isRequired,
-    color: PropTypes.string.isRequired,
-  }
-
-// const chooseColor = humanResult => {
-//   if (humanResult === 'Win !') {
-//     return '#63b45c';
-//   } else if (humanResult === 'Draw !') {
-//     return '#d4ca65';
-//   } else if (humanResult === 'Loose !') {
-//     return '#f67272';
-//   }
-// }
-//
-// chooseColor.propTypes = {
-//   humanResult: PropTypes.string,
-// }
-
-const DisplayHistory = ({ humanShape, humanColor, roundCount, computerShape, computerColor }) => {
-  return (
-    <WrapperLine>
-      <DisplayShapeHistory icon={humanShape} color={humanColor} />
-      {roundCount}
-      <DisplayShapeHistory icon={computerShape} color={computerColor} />
-    </WrapperLine>
-  );
+  icon: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
 }
+
+const DisplayHistory = ({ lineHistory }) =>
+  <WrapperLine>
+    <DisplayShapeHistory icon={lineHistory.humanShape} color={lineHistory.humanColor} />
+    Round {lineHistory.roundCount}
+    <DisplayShapeHistory icon={lineHistory.computerShape} color={lineHistory.computerColor} />
+  </WrapperLine>
+  ;
 
 DisplayHistory.propTypes = {
-  humanShape: PropTypes.string.isRequired,
-  roundCount: PropTypes.number.isRequired,
-  computerShape: PropTypes.string.isRequired,
+  lineHistory: PropTypes.object.isRequired,
 }
 
-const History = ({ actions, roundCount, history, humanResult, computerResult }) => {
+// no reverse and take(10) -> selector
+
+const History = ({ history }) => {
   return (
     <Wrapper>
       {
-        history.map(line => {
-          <DisplayHistory
-            humanShape={line.humanShape}
-            humanColor={line.humanColor}
-            roundCount={line.roundCount}
-          />}
-        )
+        R.compose(
+          R.map(line => <DisplayHistory lineHistory={line} key={line.roundCount} />),
+          R.take(10),
+          R.reverse)
+          (history)
       }
     </Wrapper>
   );
 };
 
 History.propTypes = {
-  roundCount: PropTypes.number.isRequired,
   history: PropTypes.array.isRequired,
 }
 

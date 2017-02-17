@@ -1,23 +1,32 @@
 import React, { PropTypes } from 'react';
 import styled from 'styled-components';
-import { Button, Input, Spin } from 'antd';
+import { Spin } from 'antd';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import actionList from '../../actions';
 import DisplayShape, { DisplayWins } from '../shape/display';
 
 const Wrapper = styled.section`
   border: 2px solid black;
   margin: 10px;
-  ${''/* max-width: 300px;*/}
-  ${''/* min-width: 200px;*/}
-  ${''/* max-height: 500px;*/}
+  max-width: 350px;
+  min-width: 200px;
+  min-height: 400px;
   flex-grow: 1;
 `;
 
 const WrapperTitle = styled.h3`
-  background-color: #a78cff;
+  background-color:	#ffcd94;
   color: #ffffff;
   font-size: 20px;
   font-weight: lighter;
   text-align: center;
+`;
+
+const SpinContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Title = () =>
@@ -26,30 +35,32 @@ const Title = () =>
   </WrapperTitle>
   ;
 
-const computerBoard = ({ actions, computerData, currentLoads }) => {
-  const { computerShape, color } = computerData;
+const ComputerBoard = ({ computer, currentLoads }) => {
+  const { computerShape, color, win } = computer;
   const shape = `hand-${computerShape}-o`;
   return (
     <Wrapper>
       <Title />
       {
-        (computerData.win)
-        ? <DisplayWins result={computerData.win} />
+        (computer.win)
+        ? <DisplayWins result={win} />
         : <div />
       }
       {
         (currentLoads >= 1)
-        ? <Spin size="large" />
+        ? <SpinContainer><Spin size="large" /></SpinContainer>
         : <DisplayShape icon={shape} color={color} />
       }
     </Wrapper>
   );
 };
 
-computerBoard.propTypes = {
-  actions: PropTypes.object.isRequired,
-  computerData: PropTypes.object.isRequired,
+ComputerBoard.propTypes = {
+  computer: PropTypes.object.isRequired,
   currentLoads: PropTypes.number.isRequired,
 };
 
-export default computerBoard;
+const mapStateToProps = state => state;
+const mapDispatchToProps = dispatch => ({ actions: bindActionCreators(actionList, dispatch) });
+
+export default connect(mapStateToProps, mapDispatchToProps)(ComputerBoard);

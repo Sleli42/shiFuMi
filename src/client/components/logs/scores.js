@@ -11,11 +11,14 @@ const Wrapper = styled.ul`
 `;
 
 const WrapperScore = styled.li`
-  border: 1px solid black;
   height: 100px;
   flex-grow: 1;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 20px;
+  font-weight: bold;
 `;
 
 const DisplayScore = ({ value }) =>
@@ -39,10 +42,6 @@ const ScoreList = ({ scoreList }) => {
     </Wrapper>
   );
 };
-
-// const DisplayWins = () => {
-//
-// }
 
 ScoreList.propTypes = {
   scoreList: PropTypes.object.isRequired,

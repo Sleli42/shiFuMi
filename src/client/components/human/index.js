@@ -1,18 +1,23 @@
 import React, { PropTypes } from 'react';
 import styled from 'styled-components';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import actionList from '../../actions';
 import ShapeList from '../shape/shape_list';
 import DisplayShape, { DisplayWins } from '../shape/display';
 
-const WrapperBoard = styled.section`
+export const WrapperBoard = styled.section`
   border: 2px solid black;
   margin: 10px;
+  max-width: 350px;
   min-width: 200px;
-  max-height: 500px;
+  min-height: 400px;
   flex-grow: 1;
+  position: relative;
 `;
 
 const WrapperTitle = styled.h3`
-  background-color: #a78cff;
+  background-color:	#ffcd94;
   color: #ffffff;
   font-size: 20px;
   font-weight: lighter;
@@ -25,26 +30,28 @@ const Title = () =>
   </WrapperTitle>
   ;
 
-const HumanBoard = ({ actions, shapeList, humanData, computerData }) => {
+const HumanBoard = ({ action, shapeList, human }) => {
   return (
     <WrapperBoard>
       <Title />
-      <ShapeList actions={actions} shapeList={shapeList} />
+      <ShapeList action={action} shapeList={shapeList} />
       {
-        (humanData.win)
-        ? <DisplayWins result={humanData.win} />
-        : <div />
+        (human.win)
+        ? <DisplayWins result={human.win} />
+        : null
       }
-      <DisplayShape icon={humanData.humanShape} color={humanData.color} />
+      <DisplayShape icon={human.humanShape} color={human.color} />
     </WrapperBoard>
   );
 };
 
 HumanBoard.propTypes = {
-  actions: PropTypes.object.isRequired,
+  action: PropTypes.func.isRequired,
   shapeList: PropTypes.object.isRequired,
-  humanData: PropTypes.object.isRequired,
-  computerData: PropTypes.object.isRequired,
+  human: PropTypes.object.isRequired,
 };
 
-export default HumanBoard;
+const mapStateToProps = state => state;
+const mapDispatchToProps = dispatch => ({ actions: bindActionCreators(actionList, dispatch) });
+
+export default connect(mapStateToProps, mapDispatchToProps)(HumanBoard);
