@@ -17,7 +17,7 @@ const ShapeIcon = ({ action, icon }) => {
     action(icon);
   };
   return (
-    <button
+    <span
       className={`fa fa-${icon} fa-4x`}
       aria-hidden="true"
       onClick={handleClick}
